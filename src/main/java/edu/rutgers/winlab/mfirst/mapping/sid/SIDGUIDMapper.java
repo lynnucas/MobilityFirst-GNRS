@@ -474,8 +474,7 @@ public class SIDGUIDMapper implements GUIDMapper {
     final ArrayList<NetworkAddress> returnedAddresses = new ArrayList<NetworkAddress>();
 
     for (final AddressType type : returnedTypes) {
-      returnedAddresses
-          .addAll(this.getAddressForType(type, guid, numAddresses));
+      returnedAddresses.addAll(this.getAddressForType(type, guid, numAddresses));
 
     }
     if (returnedAddresses.isEmpty()) {
@@ -501,6 +500,8 @@ public class SIDGUIDMapper implements GUIDMapper {
   private Collection<NetworkAddress> getAddressForType(final AddressType type,
       final GUID guid, final int numAddresses) {
       //assert((numAddresses+2) <= this.sidList.size());
+      LOG.debug("zzz requested guid is {}", guid);
+      
       final LinkedList<NetworkAddress> returnedAddresses = new LinkedList<NetworkAddress>();
     
       ArrayList<SID> candidateSIDS = this.sidList;
@@ -561,7 +562,7 @@ public class SIDGUIDMapper implements GUIDMapper {
         final NetworkAddress finalAddr = this.performMapping(currSid);
         //LOG.info("selected SID {} routing distance is {} ",currSid.getSIDIntValue(),
                 //currSid.getCurrDistance());
-        //LOG.info("address is {}", finalAddr);
+        LOG.info("zzz maped network address is {}", finalAddr);
         if (finalAddr == null) {
           LOG.error("Unable to map NetworkAddress for {}", currSid);
         } else {
@@ -597,11 +598,11 @@ public class SIDGUIDMapper implements GUIDMapper {
             LOG.error("Cannot find InetSocketAddr for subAS {}", autonomousSystem);
             finalAddr=null;
         } else{
+            LOG.debug("zzz maped sub as is {}", asGNRSAddr);
             finalAddr = IPv4UDPAddress.fromInetSocketAddress(asGNRSAddr);
         }
       
     }
-    LOG.info("zzz sid map to network {}", finalAddr);
     return finalAddr;
   }
 
